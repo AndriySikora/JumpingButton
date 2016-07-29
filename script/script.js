@@ -1,24 +1,36 @@
-var element = document.getElementById('box');
+var app = {
+     onload: function(){
+        this.w = window.outerWidth;
+        this.h = window.outerHeight;
+    },
 
-window.onload = function(){
-	var w = window.outerWidth;
-    var h = window.outerHeight;
-    var randomX = Math.floor((Math.random() * (w-100)));
-    var randomY = Math.floor((Math.random() * (h-100)));
-    element.style.left = randomX+'px';
-    element.style.top = randomY+'px';
-}
+    randomPosition: function() {
+        var randomX = Math.floor((Math.random() * (this.w-100)));
+        var randomY = Math.floor((Math.random() * (this.h-100)));
+        this.el.style.left = randomX+'px';
+        this.el.style.top = randomY+'px';
+    },
 
-element.addEventListener('click', changePosition, true);
+    initialize: function(element) {
+        this.onload();
+        this.el = element;
+        this.randomPosition();
+        this.addListener();
+    },
 
-function changePosition(){
-	var w = window.outerWidth;
-    var h = window.outerHeight;
-    var x = Math.floor((Math.random() * (w-100)));
-    var y = Math.floor((Math.random() * (h-100)));
-    element.style.left = x+'px';
-    element.style.top = y+'px';
-}
+    addListener: function() {
+        this.el.addEventListener('click', this.changePosition.bind(this), true);
+    },
+
+    changePosition: function() {
+        var x = Math.floor((Math.random() * (this.w-100)));
+        var y = Math.floor((Math.random() * (this.h-100)));
+        this.el.style.left = x+'px';
+        this.el.style.top = y+'px';
+    }
+};
+
+app.initialize(document.getElementById('box'));
 
 
 
